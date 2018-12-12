@@ -1,1 +1,1 @@
-# Cinema-in-Minsk
+# Cinema-in-Belarus
