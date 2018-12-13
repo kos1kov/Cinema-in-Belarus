@@ -5,9 +5,9 @@ require 'date'
 
 city = %w[МИНСК ГОМЕЛЬ ГРОДНО БРЕСТ ВИТЕБСК МОГИЛЕВ ЖЛОБИН МОЛОДЕЧНО]
 list = ['https://afisha.tut.by/day/film/', 'https://afisha.tut.by/day-gomel/film/',
-'https://afisha.tut.by/day-grodno/film/', 'https://afisha.tut.by/day-brest/film/',
-'https://afisha.tut.by/day-vitebsk/film/', 'https://afisha.tut.by/day-mogilev/film/',
-'https://afisha.tut.by/day-zhlobin/film/', 'https://afisha.tut.by/day-molodechno/film/']
+        'https://afisha.tut.by/day-grodno/film/', 'https://afisha.tut.by/day-brest/film/',
+        'https://afisha.tut.by/day-vitebsk/film/', 'https://afisha.tut.by/day-mogilev/film/',
+        'https://afisha.tut.by/day-zhlobin/film/', 'https://afisha.tut.by/day-molodechno/film/']
 puts 'Введите ваш город'
 name = gets.chomp
 city.include?(name.upcase) || puts("#{name} не найден")
@@ -36,9 +36,6 @@ date.mday < 10 && day = '0' + day
 
 link = link + date.year.to_s + '/' + month + '/' + day + '/'
 page = Nokogiri::HTML(open(link))
- new_links = page.css('div#events-block a').select{|link| link['class']== "name"}
-if new_links.empty?
-  puts 'к сожалению,данных на этот день нету'
-else
-  new_links.each{|name| puts name.xpath('.//span').text }
-end
+cinema = page.css("div[class = 'b-film-info  js-ttinfo'] a").select{|link| link['href'] != "#"}
+cinema = cinema.reverse
+cinema.each{|name| puts name.text }
